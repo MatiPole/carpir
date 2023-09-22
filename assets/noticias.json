@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "titulo": "Club De La Música",
+    "fecha": "03-07-2022",
+    "noticia": "El día domingo 3 de julio la banda se presentó en el espacio cultural 'Club De La Musica' en Villa Ballester. Tocando los temas de su EP Desperar junto al resto de su repertorio y algunos covers",
+    "img": [
+      "carpir-nosotros-1.jpg",
+      "carpir-nosotros-2.jpg",
+      "carpir-nosotros-3.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "titulo": "Grabación - Batería",
+    "fecha": "29-08-2023",
+    "noticia": "Comienzan las grabaciones para el primer disco de Carpir. En el día de hoy se grabaron las baterias, que son el primer paso en este camino que emprende la banda rumba a tener su primer álbum completo. <br>Luego de 2 jornadas de 8 horas, finalmente ya están todas las tomas necesarias y se puede empezar a pensar en lo que será la grabación del bajo.",
+    "img": [
+      "grabacion-baterias-1.jpg",
+      "grabacion-baterias-2.jpg",
+      "grabacion-baterias-3.jpg"
+    ]
+  },
+  {
+    "id": 3,
+    "titulo": "Ejemplo Ultima Noticia",
+    "fecha": "29-08-2023",
+    "noticia": "Comienzan las grabaciones para el primer disco de Carpir. En el día de hoy se grabaron las baterias, que son el primer paso en este camino Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae quam, deserunt error, hic qui recusandae accusamus, quis aliquid incidunt consectetur doloribus placeat! Deserunt eos alias dignissimos tempore tenetur similique quas!",
+    "img": [
+      "ultima-noticia-1.jpg",
+      "ultima-noticia-2.jpg",
+      "ultima-noticia-3.jpg"
+    ]
+  }
+]

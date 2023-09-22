@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="assets/style.css" />
+    <link rel="icon" type="image/ico" href="favicon.ico" />
+    <title>Carpir</title>
+  </head>
+  <body>
+    <header>
+      <!-- second nav -->
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img
+              src="assets/img/carpir-logo.png"
+              alt="Logo Carpir"
+              class="d-inline-block align-text-top logo-header"
+            />
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse justify-content-end"
+            id="navbarNav"
+          >
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#nosotros">Nosotros</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#escuchanos">Escuchanos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="noticias.html">Noticias</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="fechas.html">Fechas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#contacto">Contacto</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!--       <aside>
+        <button id="scrolltop">
+          <img src="assets/img/flecha-scroll-top.png" alt="scrooll to top" />
+        </button>
+      </aside> -->
+
+      <section id="nosotros" class="section">
+        <h2>Nosotros</h2>
+        <div>
+          <img
+            class="nosotros-banner"
+            src="assets/img/carpir-banner-home.jpg"
+            alt="Carpir en el club de la música"
+          />
+        </div>
+        <div class="nosotros-container">
+          <p>
+            Carpir es un proyecto que comienza en el 2018 y termina de
+            consolidarse a finales del 2021. La banda, compuesta por Matias
+            Poletto (voz y guitarra), Ezequiel Nabal (bajo), Augusto Mezquida
+            (guitarra) y Pablo Sosa (batería), es una mezcla de distintas
+            influencias que desembocan en sonidos, en general afines al rock,
+            pero con tintes de funk, grunge e indie.
+          </p>
+          <p class="hide-historia">
+            En febrero del 2022 comienza la grabación del primer EP de la banda
+            en el estudio de "PLV Producciones" y finalmente el 21 de abril se
+            estrena el mismo, al cual lo componen 3 canciones y lleva el nombre
+            "Despertar". Actualmente la banda se encuentra realizando
+            presentaciones en vivo donde interpretan los 3 temas del disco y
+            otras 7 canciones que aún no fueron grabadas pero que ya están
+            preparando para llevarlas al estudio.
+          </p>
+          <p class="collapse" id="collapseExample">
+            En febrero del 2022 comienza la grabación del primer EP de la banda
+            en el estudio de "PLV Producciones" y finalmente el 21 de abril se
+            estrena el mismo, al cual lo componen 3 canciones y lleva el nombre
+            "Despertar". Actualmente la banda se encuentra realizando
+            presentaciones en vivo donde interpretan los 3 temas del disco y
+            otras 7 canciones que aún no fueron grabadas pero que ya están
+            preparando para llevarlas al estudio.
+          </p>
+          <button
+            id="btn-collapse-historia"
+            class="ver-mas-button"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseExample"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            Ver más
+          </button>
+          <div class="integrantes">
+            <div class="integrante">
+              <img
+                class="img-integrantes"
+                src="assets/img/nosotros-augusto.jpg"
+                alt="augusto mezquida"
+              />
+              <h3 class="h3-integrantes">Augusto</h3>
+            </div>
+            <div class="integrante">
+              <img
+                class="img-integrantes"
+                src="assets/img/nosotros-mati.jpg"
+                alt="matias poletto"
+              />
+              <h3 class="h3-integrantes">Matías</h3>
+            </div>
+            <div class="integrante">
+              <img
+                class="img-integrantes"
+                src="assets/img/nosotros-pablo.jpg"
+                alt="pablo sosa"
+              />
+              <h3 class="h3-integrantes">Pablo</h3>
+            </div>
+            <div class="integrante">
+              <img
+                class="img-integrantes"
+                src="assets/img/nosotros-eze.jpg"
+                alt="ezequiel nabal"
+              />
+              <h3 class="h3-integrantes">Ezequiel</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="escuchanos" class="section">
+        <h2>Escuchanos</h2>
+        <div class="reproductor-container">
+          <div class="reproductor">
+            <h3>Despertar (EP)</h3>
+            <iframe
+              style="border-radius: 12px"
+              src="https://open.spotify.com/embed/album/4DUW4yu0f4WaBJ4F4UhSjB?utm_source=generator&theme=0"
+              width="100%"
+              height="380"
+              frameborder="0"
+              allowfullscreen=""
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+            ></iframe>
+          </div>
+          <div class="reproductor">
+            <h3>A Veces (Single)</h3>
+            <iframe
+              style="border-radius: 12px"
+              src="https://open.spotify.com/embed/track/10HSDelFISJWuToizIqo3T?utm_source=generator&theme=0"
+              width="100%"
+              height="352"
+              frameborder="0"
+              allowfullscreen=""
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+      </section>
+
+      <section id="noticias" class="section">
+        <h2>Noticias</h2>
+        <div class="container-noticias" id="containerNoticiasHome"></div>
+      </section>
+
+      <section class="contact-us" id="contacto">
+        <form
+          id="contactForm"
+          autocomplete="on"
+          method="POST"
+          action="assets/mail.php"
+          novalidate
+        >
+          <div class="div-contacto">
+            <h3 class="h3-contacto">CONTACTO</h3>
+          </div>
+          <div class="form-control">
+            <label for="name">Nombre: <span> *</span></label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              minlength="2"
+              maxlength="30"
+              placeholder="Su nombre aquí"
+            />
+            <small class="error-message"></small>
+          </div>
+          <div class="form-control">
+            <label for="lastname">Apellido: <span> *</span></label>
+            <input
+              type="text"
+              id="lastname"
+              name="lastname"
+              required
+              minlength="2"
+              maxlength="30"
+              placeholder="Su apellido aquí"
+            />
+            <small class="error-message"></small>
+          </div>
+          <div class="form-control">
+            <label for="email">Email:<span> *</span></label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              placeholder="test@mail.com"
+            />
+            <small class="error-message"></small>
+          </div>
+          <div class="form-control">
+            <label for="phone">Teléfono:<span> *</span></label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              required
+              placeholder="1123456789"
+            />
+            <small class="error-message"></small>
+          </div>
+          <div class="form-control">
+            <label for="comments">Mensaje:<span> *</span></label>
+            <textarea
+              name="comments"
+              id="comments"
+              required
+              minlength="50"
+              cols="10"
+              rows="10"
+              placeholder="Coloque aquí su mensaje"
+            ></textarea>
+            <small class="error-message"></small>
+          </div>
+          <input type="submit" id="submit" value="Enviar" />
+          <p class="aviso">
+            <span class="obligatorio"> * </span>los campos son obligatorios.
+          </p>
+        </form>
+      </section>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="assets/webcarpir.js"></script>
+    <script src="assets/noticiasHome.js"></script>
+    <script src="assets/mail.js"></script>
+  </body>
+</html>
