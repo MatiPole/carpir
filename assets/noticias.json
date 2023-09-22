@@ -1,35 +1,56 @@
 [
   {
     "id": 1,
-    "titulo": "Club De La Música",
-    "fecha": "03-07-2022",
-    "noticia": "El día domingo 3 de julio la banda se presentó en el espacio cultural 'Club De La Musica' en Villa Ballester. Tocando los temas de su EP Desperar junto al resto de su repertorio y algunos covers",
+    "titulo": "Presentación: A Veces",
+    "fecha": "28-10-2022",
+    "noticia": "Luego de tanta espera y un gran trabajo de producción, la banda finalmente lanza el nuevo single \"A Veces\".<br>Éste, además, vino acompañado de un video-clip el cual cuenta la historia de cómo es el día de una persona que a veces, dentro del caos de la ciudad, puede que pase desapercibida aunque haya vivido un día plagado de situaciones.",
     "img": [
-      "carpir-nosotros-1.jpg",
-      "carpir-nosotros-2.jpg",
-      "carpir-nosotros-3.jpg"
-    ]
+      "assets/img/a-veces-1.jpg",
+      "assets/img/a-veces-2.jpg",
+      "assets/img/a-veces-3.jpg"
+    ],
+    "imgExtras": [
+      "assets/img/a-veces-extra-1.jpg",
+      "assets/video/extra-grabacion-a-veces-2.mp4",
+      "assets/video/extra-grabacion-a-veces-1.mp4"
+    ],
+    "videoClip": true,
+    "linkVideoClip": "https://www.youtube.com/watch?v=gDdTd1dS8W0"
   },
   {
     "id": 2,
+    "titulo": "Club De La Música",
+    "fecha": "10-06-2023",
+    "noticia": "Nuevamente el conjunto se presenta en El Club de la Música, esta vez acompañados por la banda Malos Hábitos, donde además Augusto (guitarrista de Carpir) es bajista. <br>El evento tuvo lugar en el barrio Villa Ballester, donde el espacio quedó repleto por el público que acudió a precensiar el show.<br>En dicha presentación, la banda tuvo la oportunidad de mostrarle a quienes los estaban escuchando, algunas de las nuevos cambios que incorporaron para lo que se viene en la grabación del disco",
+    "img": [
+      "assets/img/club-musica-1.jpg",
+      "assets/img/club-musica-2.jpg",
+      "assets/img/club-musica-3.jpg"
+    ],
+    "imgExtras": [
+      "assets/img/club-musica-extra-1.jpg",
+      "assets/img/club-musica-extra-2.jpg",
+      "assets/img/club-musica-extra-3.jpg"
+    ],
+    "videoClip": false,
+    "linkVideoClip": ""
+  },
+  {
+    "id": 3,
     "titulo": "Grabación - Batería",
     "fecha": "29-08-2023",
     "noticia": "Comienzan las grabaciones para el primer disco de Carpir. En el día de hoy se grabaron las baterias, que son el primer paso en este camino que emprende la banda rumba a tener su primer álbum completo. <br>Luego de 2 jornadas de 8 horas, finalmente ya están todas las tomas necesarias y se puede empezar a pensar en lo que será la grabación del bajo.",
     "img": [
-      "grabacion-baterias-1.jpg",
-      "grabacion-baterias-2.jpg",
-      "grabacion-baterias-3.jpg"
-    ]
-  },
-  {
-    "id": 3,
-    "titulo": "Ejemplo Ultima Noticia",
-    "fecha": "29-08-2023",
-    "noticia": "Comienzan las grabaciones para el primer disco de Carpir. En el día de hoy se grabaron las baterias, que son el primer paso en este camino Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae quam, deserunt error, hic qui recusandae accusamus, quis aliquid incidunt consectetur doloribus placeat! Deserunt eos alias dignissimos tempore tenetur similique quas!",
-    "img": [
-      "ultima-noticia-1.jpg",
-      "ultima-noticia-2.jpg",
-      "ultima-noticia-3.jpg"
-    ]
+      "assets/img/grabacion-baterias-1.jpg",
+      "assets/img/grabacion-baterias-2.jpg",
+      "assets/img/grabacion-baterias-3.jpg"
+    ],
+    "imgExtras": [
+      "assets/img/extra-grabacion-bateria-1.jpg",
+      "assets/video/extra-grabacion-bateria-2.mp4",
+      "assets/video/extra-grabacion-bateria-3.mp4"
+    ],
+    "videoClip": false,
+    "linkVideoClip": ""
   }
 ]

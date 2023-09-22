@@ -312,6 +312,27 @@ aside {
   margin-left: 2.4rem;
 }
 
+.ver-video-button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  font-size: 1rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  background-color: rgb(167, 17, 236);
+  border-radius: 4px;
+  cursor: pointer;
+  color: antiquewhite !important;
+  margin-left: 2.4rem;
+}
+.ver-video-button:hover {
+  background-color: rgb(195, 69, 253);
+}
+
+.ver-mas-button:hover {
+  background-color: rgb(248, 69, 46);
+  color: antiquewhite !important;
+}
 .container {
   max-width: 100%;
   margin: 0 auto;
@@ -693,4 +714,45 @@ label span {
   padding: 0 !important;
   margin: 0 !important;
   width: 0 !important;
+}
+
+/* MODAL FOTOS*/
+
+.modal-body {
+  padding: 0 !important;
+}
+.container-close {
+  display: flex;
+  justify-content: end;
+  position: relative;
+}
+.btn-close {
+  background-color: rgb(255, 255, 255) !important;
+  --bs-btn-close-opacity: 1;
+  padding: 5px;
+  position: absolute;
+  top: 0;
+  transform: translate(10px, -10px);
+  z-index: 100;
+}
+
+.carousel-control-prev-modal {
+  left: -50px !important;
+}
+
+.carousel-control-next-modal {
+  right: -50px !important;
+}
+
+.modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  background-color: transparent !important;
+  background-clip: padding-box;
+  border: none !important;
+  border-radius: var(--bs-modal-border-radius);
+  outline: 0 !important;
 }
