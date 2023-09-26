@@ -297,7 +297,11 @@ aside {
   margin-left: 20px;
   vertical-align: middle;
 }
-
+.cointainer-btn-verMasverVideo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .ver-mas-button {
   margin-top: 1rem;
   padding: 0.5rem 1rem;
@@ -313,7 +317,6 @@ aside {
 }
 
 .ver-video-button {
-  margin-top: 1rem;
   padding: 0.5rem 1rem;
   border: none;
   font-size: 1rem;
@@ -323,7 +326,7 @@ aside {
   border-radius: 4px;
   cursor: pointer;
   color: antiquewhite !important;
-  margin-left: 2.4rem;
+  margin-inline: 1rem;
 }
 .ver-video-button:hover {
   background-color: rgb(195, 69, 253);
@@ -736,12 +739,10 @@ label span {
   z-index: 100;
 }
 
-.carousel-control-prev-modal {
-  left: -50px !important;
-}
-
-.carousel-control-next-modal {
-  right: -50px !important;
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  background-color: #1f1f1f;
+  border-radius: 50%;
 }
 
 .modal-content {

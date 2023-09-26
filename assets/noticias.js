@@ -24,7 +24,7 @@ const generarNoticias = (data) => {
             ${noticia.noticia}
           </p>
              <!-- Button trigger modal -->
-             <div>
+             <div class="cointainer-btn-verMasverVideo">
   <button
     type="button"
     class="btn ver-mas-button"
