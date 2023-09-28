@@ -43,17 +43,17 @@ const generarNoticias = (data) => {
           <div class="carousel-inner">
             <div class="carousel-item active">
               <img src="${noticia.img[0]}" class="d-block w-100" alt="${
-      noticia.img[0]
+      noticia.alt[0]
     }">
             </div>
             <div class="carousel-item">
               <img src="${noticia.img[1]}" class="d-block w-100" alt="${
-      noticia.img[1]
+      noticia.alt[1]
     }">
             </div>
             <div class="carousel-item">
               <img src="${noticia.img[2]}" class="d-block w-100" alt="${
-      noticia.img[2]
+      noticia.alt[2]
     }">
             </div>
           </div>
@@ -92,23 +92,23 @@ const generarNoticias = (data) => {
     <div class="carousel-item active">
   ${
     noticia.imgExtras[0].endsWith(".mp4")
-      ? `<video src="${noticia.imgExtras[0]}" controls width="500" height="325"></video>`
-      : `<img src="${noticia.imgExtras[0]}" class="d-block w-100" alt="${noticia.imgExtras[0]}">`
+      ? `<video src="${noticia.imgExtras[0]}" controls class="size-video-noticias"></video>`
+      : `<img src="${noticia.imgExtras[0]}" class="d-block w-100" alt="${noticia.altExtras[0]}">`
   }
     </div>
     <div class="carousel-item"> 
   ${
     noticia.imgExtras[1].endsWith(".mp4")
-      ? `<video src="${noticia.imgExtras[1]}" controls width="500" height="325"></video>`
-      : `<img src="${noticia.imgExtras[1]}" class="d-block w-100" alt="${noticia.imgExtras[1]}">`
+      ? `<video src="${noticia.imgExtras[1]}" controls class="size-video-noticias"></video>`
+      : `<img src="${noticia.imgExtras[1]}" class="d-block w-100" alt="${noticia.altExtras[1]}">`
   }
     </div>
 
     <div class="carousel-item">
   ${
     noticia.imgExtras[2].endsWith(".mp4")
-      ? `<video src="${noticia.imgExtras[2]}" controls width="500" height="325"></video>`
-      : `<img src="${noticia.imgExtras[2]}" class="d-block w-100" alt="${noticia.imgExtras[2]}">`
+      ? `<video src="${noticia.imgExtras[2]}" controls class="size-video-noticias"></video>`
+      : `<img src="${noticia.imgExtras[2]}" class="d-block w-100" alt="${noticia.altExtras[2]}">`
   }
     </div>
   </div>

@@ -28,13 +28,13 @@ const generarUltimaNoticia = (noticia, index) => {
         <div id="${carouselId}" class="carousel carousel-fix slide carousel-fade" data-bs-ride="carousel" data-bs-interval="2500">
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img src="${noticia.img[0]}" class="d-block w-100" alt="...">
+              <img src="${noticia.img[0]}" class="d-block w-100" alt="${noticia.alt[0]}">
             </div>
             <div class="carousel-item">
-              <img src="${noticia.img[1]}" class="d-block w-100" alt="...">
+              <img src="${noticia.img[1]}" class="d-block w-100" alt="${noticia.alt[1]}">
             </div>
             <div class="carousel-item">
-              <img src="${noticia.img[2]}" class="d-block w-100" alt="...">
+              <img src="${noticia.img[2]}" class="d-block w-100" alt="${noticia.alt[2]}">
             </div>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">

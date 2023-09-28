@@ -303,7 +303,7 @@ aside {
   align-items: center;
 }
 .ver-mas-button {
-  margin-top: 1rem;
+  margin-block: 1rem;
   padding: 0.5rem 1rem;
   border: none;
   font-size: 1rem;
@@ -326,7 +326,7 @@ aside {
   border-radius: 4px;
   cursor: pointer;
   color: antiquewhite !important;
-  margin-inline: 1rem;
+  margin: 1rem;
 }
 .ver-video-button:hover {
   background-color: rgb(195, 69, 253);
@@ -756,4 +756,16 @@ label span {
   border: none !important;
   border-radius: var(--bs-modal-border-radius);
   outline: 0 !important;
+}
+
+@media (min-width: 576px) and (min-width: 770px) {
+  .modal-dialog {
+    max-width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+.size-video-noticias {
+  width: 100%;
+  height: 100%;
 }

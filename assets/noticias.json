@@ -9,10 +9,20 @@
       "assets/img/a-veces-2.jpg",
       "assets/img/a-veces-3.jpg"
     ],
+    "alt": [
+      "foto del video A Veces de Carpir",
+      "segunda foto del video A Veces de Carpir",
+      "tercera foto del video A Veces de Carpir"
+    ],
     "imgExtras": [
       "assets/img/a-veces-extra-1.jpg",
       "assets/video/extra-grabacion-a-veces-2.mp4",
       "assets/video/extra-grabacion-a-veces-1.mp4"
+    ],
+    "altExtras": [
+      "backstage del video de A vece de Carpir",
+      "fragmento de la grabación del video",
+      "cierre del dia de filmación de Carpir"
     ],
     "videoClip": true,
     "linkVideoClip": "https://www.youtube.com/watch?v=gDdTd1dS8W0"
@@ -27,10 +37,20 @@
       "assets/img/club-musica-2.jpg",
       "assets/img/club-musica-3.jpg"
     ],
+    "alt": [
+      "foto de Carpir en club de la música banda completa",
+      "foto de los integrantes de Capir Augusto y Ezequiel",
+      "foto del baterista de Carpir Pablo"
+    ],
     "imgExtras": [
       "assets/img/club-musica-extra-1.jpg",
       "assets/img/club-musica-extra-2.jpg",
       "assets/img/club-musica-extra-3.jpg"
+    ],
+    "altExtras": [
+      "foto de carpir en el club de la música",
+      "foto de carpir en el club de la música",
+      "foto de carpir en el club de la música"
     ],
     "videoClip": false,
     "linkVideoClip": ""
@@ -45,10 +65,20 @@
       "assets/img/grabacion-baterias-2.jpg",
       "assets/img/grabacion-baterias-3.jpg"
     ],
+    "alt": [
+      "foto del baterista de Carpir grabando las baterias para el disco",
+      "foto del baterista de Carpir grabando las baterias para el disco",
+      "foto de los productores de Carpir el dia de la grabacion de baterias"
+    ],
     "imgExtras": [
       "assets/img/extra-grabacion-bateria-1.jpg",
       "assets/video/extra-grabacion-bateria-2.mp4",
       "assets/video/extra-grabacion-bateria-3.mp4"
+    ],
+    "altExtras": [
+      "foto del baterista de Carpir grabando las baterias para el disco",
+      "video del dia de grabación de baterias",
+      "video del dia de grabación de baterias"
     ],
     "videoClip": false,
     "linkVideoClip": ""
