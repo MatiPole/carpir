@@ -94,7 +94,7 @@ li {
   top: 150%;
 }*/
 
-li:hover::after {
+.nav-item:hover::after {
   content: "";
   height: 5%;
   position: absolute;
@@ -120,7 +120,7 @@ p {
   padding-inline: 40px;
 }
 
-h2:not(.subtitule) {
+.titulos-section:not(.subtitule) {
   font-size: 2.5rem;
   color: rgb(22, 22, 22);
   font-family: sansation-regular;
@@ -131,7 +131,7 @@ h2:not(.subtitule) {
   padding-bottom: 10px;
 }
 
-h2::before {
+.titulos-section::before {
   content: "";
   height: 8%;
   position: absolute;
@@ -563,6 +563,7 @@ label span {
     padding: 3rem 0rem;
   }
   /* FECHAS */
+
   #fechas h3 {
     font-size: 1.5rem !important;
   }
@@ -618,16 +619,24 @@ label span {
   #btn-collapse-historia {
     display: block;
   }
+
+  #fechas {
+    min-height: 50dvh !important;
+  }
   .hide-historia {
     display: none;
   }
 }
-
+@media (min-width: 1024px) {
+  #fechas {
+    min-height: 100dvh !important;
+  }
+}
 @media (max-width: 768px) {
   .logo-header {
     width: 100px;
   }
-  h2:not(.subtitule) {
+  .titulos-section:not(.subtitule) {
     font-size: 2rem;
     color: rgb(22, 22, 22);
     font-family: sansation-regular;
@@ -768,4 +777,81 @@ label span {
 .size-video-noticias {
   width: 100%;
   height: 100%;
+}
+
+/* FOOTER */
+footer {
+  background-color: rgb(32, 32, 32);
+  display: flex;
+  justify-content: space-around;
+  padding-block: 0.5rem 1.5rem;
+}
+
+.info-contacto h4 {
+  color: var(--white);
+  padding: 0 0 0.2rem 0;
+  font-family: var(--ff-montserrat);
+  font-size: 1.5rem;
+}
+.info-contacto li {
+  color: var(--white);
+  font-family: var(--ff-montserrat);
+  font-size: 1rem;
+  font-weight: 300;
+  padding-top: 0.5rem;
+  margin: 0;
+}
+.info-contacto ul {
+  padding-left: 0;
+}
+
+.redes-sociales,
+.copyright,
+.info-contacto {
+  padding-top: 1rem;
+}
+
+.copyright {
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+.redes-sociales {
+  display: flex;
+  column-gap: 2rem;
+}
+
+.redes-sociales div a {
+  display: flex;
+  width: 70px;
+  height: 70px;
+}
+
+.redes-sociales div a img {
+  max-width: 100%;
+  height: auto;
+  transition-duration: 0.5s;
+}
+.redes-sociales div a img:hover {
+  transform: scale(1.1) translateY(-5px);
+}
+
+@media (max-width: 768px) {
+  footer {
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1rem;
+  }
+  .copyright {
+    padding-inline: 1rem;
+  }
+  .info-contacto {
+    text-align: center;
+  }
+  .redes-sociales div a {
+    display: flex;
+    width: 50px;
+    height: 50px;
+  }
 }
