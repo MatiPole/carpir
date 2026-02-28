@@ -87,6 +87,7 @@
             </div>
             @endforeach
         </div>
+        <a href="{{ route('escuchanos.index') }}" class="escuchanos-ver-mas">Ver más</a>
     </section>
 
     <section id="noticias" class="noticias-preview-section section">
@@ -104,7 +105,6 @@
             <article class="noticia-preview-content">
                 <h3>{{ $ultima->titulo }}<span class="fecha-badge">{{ $ultima->fecha }}</span></h3>
                 <div class="noticia-texto">{!! $ultima->noticia !!}</div>
-                <a href="{{ route('noticias.index') }}" class="ver-mas-noticias-button">Más Noticias</a>
             </article>
             <div class="noticia-carousel" data-carousel="noticia-preview">
                 <button type="button" class="carousel-button prev" aria-label="Anterior">‹</button>
@@ -129,6 +129,7 @@
                 @endif
             </div>
         </div>
+        <a href="{{ route('noticias.index') }}" class="ver-mas-section-link escuchanos-ver-mas">Más Noticias</a>
         @push('scripts')
         <script>
         (function(){
@@ -195,7 +196,6 @@
             </div>
             <div class="info-contacto-seccion" style="margin-top:2rem">
                 <p>carpirok@gmail.com</p>
-                <p>(+54)1167140002</p>
                 <p>Buenos Aires, Argentina</p>
             </div>
         </div>

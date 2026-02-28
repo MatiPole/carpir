@@ -78,9 +78,21 @@
     var thumbEmpty = document.getElementById('imagen-thumb-empty');
     var btn = document.getElementById('btn-elegir-imagen');
     var fileInput = document.getElementById('input-imagen-file');
+    var form = document.getElementById('form-integrante');
+    var saveBtn = form ? form.querySelector('button[type="submit"]') : null;
+    var pendingFile = null;
+    var uploadUrl = '{{ route("upload.store") }}';
+    var csrfToken = '{{ csrf_token() }}';
     if (!btn) return;
-    function showThumb(url) {
+    function showThumbFromUrl(url) {
+        if (!thumb) return;
         thumb.src = url.startsWith('http') || url.startsWith('/') ? url : (window.location.origin + (url.startsWith('/') ? '' : '/') + url);
+        thumb.style.display = 'block';
+        if (thumbEmpty) thumbEmpty.style.display = 'none';
+    }
+    function showThumbFromFile(file) {
+        if (!thumb) return;
+        thumb.src = URL.createObjectURL(file);
         thumb.style.display = 'block';
         if (thumbEmpty) thumbEmpty.style.display = 'none';
     }
@@ -89,26 +101,36 @@
     fileInput.addEventListener('change', function() {
         var file = this.files[0];
         if (!file) return;
-        btn.disabled = true;
-        btn.textContent = 'Subiendo…';
-        var formData = new FormData();
-        formData.append('file', file);
-        formData.append('type', 'img');
-        fetch('{{ route("upload.store") }}', {
-            method: 'POST',
-            body: formData,
-            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json' }
-        }).then(function(r) { return r.json(); })
-        .then(function(data) {
-            if (data.url) { pathInput.value = data.url; showThumb(data.url); }
-            else if (data.error) alert(data.error);
-        }).catch(function() { alert('Error al subir la imagen.'); })
-        .finally(function() {
-            btn.disabled = false;
-            btn.textContent = 'Elegir imagen';
-            fileInput.value = '';
-        });
+        pendingFile = file;
+        pathInput.value = '';
+        showThumbFromFile(file);
+        this.value = '';
     });
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            if (!pendingFile) return;
+            e.preventDefault();
+            if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Guardando...'; }
+            var formData = new FormData();
+            formData.append('file', pendingFile);
+            formData.append('type', 'img');
+            fetch(uploadUrl, {
+                method: 'POST',
+                body: formData,
+                headers: { 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' }
+            }).then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (data.url) {
+                    pathInput.value = data.url;
+                    pendingFile = null;
+                    form.submit();
+                } else if (data.error) throw new Error(data.error);
+            }).catch(function(err) {
+                if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Guardar'; }
+                alert(err.message || 'Error al subir la imagen.');
+            });
+        });
+    }
 })();
 </script>
 @endpush

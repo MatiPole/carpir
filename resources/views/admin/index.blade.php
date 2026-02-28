@@ -137,7 +137,7 @@
         </div>
 
         <div id="pane-nosotros" class="tab-pane">
-            <form method="POST" action="{{ route('admin.nosotros.update') }}">
+            <form method="POST" action="{{ route('admin.nosotros.update') }}" id="form-nosotros">
                 @csrf
                 @method('PUT')
                 <div class="form-group">
@@ -222,25 +222,50 @@
     </div>
 
     <script>
+        function activateTab(tabName) {
+            var tabBtn = document.querySelector('.admin-tab[data-tab="' + tabName + '"]');
+            if (!tabBtn) return;
+            document.querySelectorAll('.admin-tab').forEach(function(b){ b.classList.remove('active'); });
+            document.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
+            tabBtn.classList.add('active');
+            var pane = document.getElementById('pane-' + tabName);
+            if (pane) pane.classList.add('active');
+        }
         document.querySelectorAll('.admin-tab').forEach(function(btn) {
             btn.addEventListener('click', function() {
                 var tab = this.getAttribute('data-tab');
-                document.querySelectorAll('.admin-tab').forEach(function(b){ b.classList.remove('active'); });
-                document.querySelectorAll('.tab-pane').forEach(function(p){ p.classList.remove('active'); });
-                this.classList.add('active');
-                var pane = document.getElementById('pane-' + tab);
-                if (pane) pane.classList.add('active');
+                var successEl = document.querySelector('.admin-content .success');
+                if (successEl) successEl.remove();
+                activateTab(tab);
+                window.location.hash = tab;
             });
         });
+        (function() {
+            var hash = window.location.hash.replace(/^#/, '');
+            if (hash && ['fechas','noticias','nosotros','escuchanos','integrantes'].indexOf(hash) !== -1) {
+                activateTab(hash);
+            }
+        })();
         (function() {
             var pathInput = document.getElementById('nosotros-imagen-path');
             var thumb = document.getElementById('nosotros-imagen-thumb');
             var thumbEmpty = document.getElementById('nosotros-imagen-empty');
             var btn = document.getElementById('nosotros-btn-imagen');
             var fileInput = document.getElementById('nosotros-input-imagen');
+            var form = document.getElementById('form-nosotros');
+            var saveBtn = form ? form.querySelector('button[type="submit"]') : null;
+            var pendingNosotrosFile = null;
+            var uploadUrl = '{{ route("upload.store") }}';
+            var csrfToken = document.querySelector('meta[name="csrf-token"]');
+            csrfToken = csrfToken ? csrfToken.getAttribute('content') : '{{ csrf_token() }}';
             if (!pathInput || !btn) return;
-            function showThumb(url) {
+            function showThumbFromUrl(url) {
                 thumb.src = url.startsWith('http') || url.startsWith('/') ? url : (window.location.origin + (url.startsWith('/') ? '' : '/') + url);
+                thumb.style.display = 'block';
+                if (thumbEmpty) thumbEmpty.style.display = 'none';
+            }
+            function showThumbFromFile(file) {
+                thumb.src = URL.createObjectURL(file);
                 thumb.style.display = 'block';
                 if (thumbEmpty) thumbEmpty.style.display = 'none';
             }
@@ -248,30 +273,36 @@
             fileInput.addEventListener('change', function() {
                 var file = this.files[0];
                 if (!file) return;
-                btn.disabled = true;
-                btn.textContent = 'Subiendo...';
-                var formData = new FormData();
-                formData.append('file', file);
-                formData.append('type', 'img');
-                var token = document.querySelector('meta[name="csrf-token"]');
-                token = token ? token.getAttribute('content') : '';
-                fetch('{{ route("upload.store") }}', {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'X-CSRF-TOKEN': token || '{{ csrf_token() }}', 'Accept': 'application/json' }
-                }).then(function(r) { return r.json(); })
-                .then(function(data) {
-                    if (data.url) {
-                        pathInput.value = data.url;
-                        showThumb(data.url);
-                    } else if (data.error) alert(data.error);
-                }).catch(function() { alert('Error al subir.'); })
-                .finally(function() {
-                    btn.disabled = false;
-                    btn.textContent = 'Elegir imagen';
-                    fileInput.value = '';
-                });
+                pendingNosotrosFile = file;
+                pathInput.value = '';
+                showThumbFromFile(file);
+                this.value = '';
             });
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    if (!pendingNosotrosFile) return;
+                    e.preventDefault();
+                    if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Guardando...'; }
+                    var formData = new FormData();
+                    formData.append('file', pendingNosotrosFile);
+                    formData.append('type', 'img');
+                    fetch(uploadUrl, {
+                        method: 'POST',
+                        body: formData,
+                        headers: { 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' }
+                    }).then(function(r) { return r.json(); })
+                    .then(function(data) {
+                        if (data.url) {
+                            pathInput.value = data.url;
+                            pendingNosotrosFile = null;
+                            form.submit();
+                        } else if (data.error) throw new Error(data.error);
+                    }).catch(function(err) {
+                        if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Guardar configuración'; }
+                        alert(err.message || 'Error al subir.');
+                    });
+                });
+            }
         })();
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/trix@2.0.8/dist/trix.css">

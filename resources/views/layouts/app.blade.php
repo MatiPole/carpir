@@ -15,9 +15,9 @@
     <title>@yield('title', 'Carpir | Banda de Rock Indie')</title>
     @stack('styles')
     @if(file_exists(public_path('assets/app.css')))
-    <link rel="stylesheet" href="{{ asset('assets/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/app.css') }}?v={{ filemtime(public_path('assets/app.css')) }}">
     @elseif(file_exists(public_path('assets/style.css')))
-    <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/style.css') }}?v={{ filemtime(public_path('assets/style.css')) }}">
     @endif
 </head>
 <body>
@@ -52,9 +52,9 @@
             <ul class="navbar-nav" id="navbar-nav" role="menubar" :class="{ 'active': navOpen }">
                 <li class="nav-item" role="none"><a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" role="menuitem" @click="navOpen = false">Home</a></li>
                 <li class="nav-item" role="none"><a href="{{ url('/#nosotros') }}" class="nav-link" role="menuitem" @click="navOpen = false">Nosotros</a></li>
+                <li class="nav-item" role="none"><a href="{{ url('/#proximas-fechas') }}" class="nav-link" role="menuitem" @click="navOpen = false">Fechas</a></li>
                 <li class="nav-item" role="none"><a href="{{ url('/#escuchanos') }}" class="nav-link" role="menuitem" @click="navOpen = false">Escuchanos</a></li>
-                <li class="nav-item" role="none"><a href="{{ route('noticias.index') }}" class="nav-link {{ request()->routeIs('noticias.*') ? 'active' : '' }}" role="menuitem" @click="navOpen = false">Noticias</a></li>
-                <li class="nav-item" role="none"><a href="{{ route('fechas.index') }}" class="nav-link {{ request()->routeIs('fechas.index') ? 'active' : '' }}" role="menuitem" @click="navOpen = false">Fechas</a></li>
+                <li class="nav-item" role="none"><a href="{{ url('/#noticias') }}" class="nav-link" role="menuitem" @click="navOpen = false">Noticias</a></li>
                 <li class="nav-item" role="none"><a href="{{ url('/#contacto') }}" class="nav-link" role="menuitem" @click="navOpen = false">Contacto</a></li>
             </ul>
         </nav>
@@ -72,7 +72,6 @@
                 <h4>Contacto</h4>
                 <ul>
                     <li>carpirok@gmail.com</li>
-                    <li>(+54)1167140002</li>
                     <li>Buenos Aires, Argentina</li>
                 </ul>
             </div>

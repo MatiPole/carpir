@@ -27,9 +27,17 @@
         <label for="titulo">Título *</label>
         <input id="titulo" type="text" name="titulo" value="{{ old('titulo', $noticia->titulo ?? '') }}" required>
     </div>
+    @php
+        $fechaVal = old('fecha', $noticia->fecha ?? null);
+        if ($fechaVal) {
+            try { $fechaVal = \Carbon\Carbon::parse($fechaVal)->format('Y-m-d'); } catch (\Exception $e) { $fechaVal = date('Y-m-d'); }
+        } else {
+            $fechaVal = date('Y-m-d');
+        }
+    @endphp
     <div class="form-group">
         <label for="fecha">Fecha *</label>
-        <input id="fecha" type="text" name="fecha" value="{{ old('fecha', $noticia->fecha ?? date('Y-m-d')) }}" required placeholder="YYYY-MM-DD">
+        <input id="fecha" type="date" name="fecha" value="{{ $fechaVal }}" required>
     </div>
     <div class="form-group">
         <label>Noticia (texto) *</label>
@@ -111,63 +119,133 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/trix@2.0.8/dist/trix.umd.min.js"></script>
 <script>
-document.querySelectorAll('.upload-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-        var slot = this.getAttribute('data-slot');
-        var fileInput = document.querySelector('.img-file-input[data-slot="' + slot + '"]');
-        if (fileInput) fileInput.click();
+(function() {
+    var pendingFiles = {};
+    var uploadUrl = '{{ route("upload.store") }}';
+    var csrfToken = '{{ csrf_token() }}';
+
+    document.querySelectorAll('.upload-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var slot = this.getAttribute('data-slot');
+            var fileInput = document.querySelector('.img-file-input[data-slot="' + slot + '"]');
+            if (fileInput) fileInput.click();
+        });
     });
-});
-function isVideoUrl(url) {
-    return /\.(mp4|webm|ogg|mov)(\?|$)/i.test(url || '');
-}
-document.querySelectorAll('.img-file-input').forEach(function(input) {
-    input.addEventListener('change', function() {
-        var file = this.files[0];
-        if (!file) return;
-        var btn = document.querySelector('.upload-btn[data-slot="' + this.getAttribute('data-slot') + '"]');
-        var urlInput = this.closest('.img-slot').querySelector('input.img-url-input');
-        btn.disabled = true;
-        btn.textContent = 'Subiendo...';
+
+    function isVideoFile(file) {
+        return file.type && file.type.indexOf('video/') === 0;
+    }
+    function isVideoUrl(url) {
+        return /\.(mp4|webm|ogg|mov)(\?|$)/i.test(url || '');
+    }
+
+    function showPreviewFromFile(wrap, file) {
+        if (!wrap) return;
+        wrap.innerHTML = '';
+        var blobUrl = URL.createObjectURL(file);
+        if (isVideoFile(file)) {
+            var v = document.createElement('video');
+            v.src = blobUrl;
+            v.controls = true;
+            v.className = 'preview-media';
+            v.style.maxWidth = '140px'; v.style.maxHeight = '90px';
+            wrap.appendChild(v);
+        } else {
+            var im = document.createElement('img');
+            im.src = blobUrl;
+            im.alt = 'Vista previa';
+            im.className = 'preview-media';
+            wrap.appendChild(im);
+        }
+    }
+
+    function showPreviewFromUrl(wrap, url) {
+        if (!wrap || !url) return;
+        wrap.innerHTML = '';
+        var fullUrl = url.startsWith('http') || url.startsWith('/') ? url : (window.location.origin + (url.startsWith('/') ? '' : '/') + url);
+        if (isVideoUrl(url)) {
+            var v = document.createElement('video');
+            v.src = fullUrl;
+            v.controls = true;
+            v.className = 'preview-media';
+            v.style.maxWidth = '140px'; v.style.maxHeight = '90px';
+            wrap.appendChild(v);
+        } else {
+            var im = document.createElement('img');
+            im.src = fullUrl;
+            im.alt = 'Preview';
+            im.className = 'preview-media';
+            wrap.appendChild(im);
+        }
+    }
+
+    document.querySelectorAll('.img-file-input').forEach(function(input) {
+        input.addEventListener('change', function() {
+            var file = this.files[0];
+            if (!file) return;
+            var slot = this.getAttribute('data-slot');
+            var urlInput = this.closest('.img-slot').querySelector('input.img-url-input');
+            var wrap = this.closest('.img-slot').querySelector('.img-preview-wrap');
+            pendingFiles[slot] = file;
+            urlInput.value = '';
+            showPreviewFromFile(wrap, file);
+            this.value = '';
+        });
+    });
+
+    var form = document.getElementById('form-noticia');
+    var saveBtn = form ? form.querySelector('button[type="submit"]') : null;
+
+    function uploadOne(slot) {
+        var file = pendingFiles[slot];
+        if (!file) return Promise.resolve();
+        var fileInput = document.querySelector('.img-file-input[data-slot="' + slot + '"]');
+        var urlInput = fileInput.closest('.img-slot').querySelector('input.img-url-input');
         var formData = new FormData();
         formData.append('file', file);
-        formData.append('type', (file.type && file.type.indexOf('video/') === 0) ? 'video' : 'img');
-        fetch('{{ route("upload.store") }}', {
+        formData.append('type', isVideoFile(file) ? 'video' : 'img');
+        return fetch(uploadUrl, {
             method: 'POST',
             body: formData,
-            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json' }
+            headers: { 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' }
         }).then(function(r) { return r.json(); })
         .then(function(data) {
             if (data.url) {
                 urlInput.value = data.url;
-                var wrap = urlInput.closest('.img-slot').querySelector('.img-preview-wrap');
-                if (wrap) {
-                    wrap.innerHTML = '';
-                    var fullUrl = data.url.startsWith('http') || data.url.startsWith('/') ? data.url : (window.location.origin + (data.url.startsWith('/') ? '' : '/') + data.url);
-                    if (isVideoUrl(data.url)) {
-                        var v = document.createElement('video');
-                        v.src = fullUrl;
-                        v.controls = true;
-                        v.className = 'preview-media';
-                        v.style.maxWidth = '140px'; v.style.maxHeight = '90px';
-                        wrap.appendChild(v);
-                    } else {
-                        var im = document.createElement('img');
-                        im.src = fullUrl;
-                        im.alt = 'Preview';
-                        im.className = 'preview-media';
-                        wrap.appendChild(im);
-                    }
-                }
-            } else if (data.error) alert(data.error);
-        }).catch(function() { alert('Error al subir'); })
-        .finally(function() {
-            btn.disabled = false;
-            btn.textContent = 'Subir imagen o video';
-            input.value = '';
+                delete pendingFiles[slot];
+            } else if (data.error) throw new Error(data.error);
         });
-    });
-});
+    }
+
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            var slots = Object.keys(pendingFiles);
+            if (slots.length === 0) return;
+            e.preventDefault();
+            if (saveBtn) {
+                saveBtn.disabled = true;
+                saveBtn.textContent = 'Guardando...';
+            }
+            var chain = Promise.resolve();
+            slots.forEach(function(slot) {
+                chain = chain.then(function() { return uploadOne(slot); });
+            });
+            chain.then(function() {
+                if (saveBtn) {
+                    saveBtn.textContent = 'Guardar';
+                    saveBtn.disabled = false;
+                }
+                form.submit();
+            }).catch(function(err) {
+                if (saveBtn) {
+                    saveBtn.textContent = 'Guardar';
+                    saveBtn.disabled = false;
+                }
+                alert(err.message || 'Error al subir.');
+            });
+        });
+    }
+})();
 </script>
 @endpush
 @endsection

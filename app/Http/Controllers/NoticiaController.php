@@ -9,7 +9,7 @@ class NoticiaController extends Controller
 {
     public function index()
     {
-        $noticias = Noticia::orderBy('fecha', 'desc')->get();
+        $noticias = Noticia::orderBy('created_at', 'desc')->orderBy('id', 'desc')->get();
         return view('noticias.index', compact('noticias'));
     }
 

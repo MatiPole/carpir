@@ -14,7 +14,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $noticias = Noticia::orderBy('fecha', 'desc')->get();
+        $noticias = Noticia::orderBy('created_at', 'desc')->orderBy('id', 'desc')->get();
         $integrantes = Integrante::orderBy('orden')->orderBy('id')->get();
         $nosotros = NosotrosConfig::getConfig();
         $escuchanos = EscuchanosItem::orderBy('orden')->orderBy('id')->get();
@@ -49,16 +49,34 @@ class AdminController extends Controller
         ]);
         $img = $data['img'] ?? [];
         $alt = $data['alt'] ?? [];
-        $data['img'] = array_values(array_filter($img, fn($v) => $v !== '' && $v !== null));
-        $data['alt'] = array_values(array_filter($alt, fn($_, $i) => !empty($img[$i] ?? '')));
+        $filteredImg = [];
+        $filteredAlt = [];
+        foreach (array_keys($img) as $i) {
+            $v = $img[$i] ?? '';
+            if ($v !== '' && $v !== null) {
+                $filteredImg[] = $v;
+                $filteredAlt[] = $alt[$i] ?? '';
+            }
+        }
+        $data['img'] = $filteredImg;
+        $data['alt'] = $filteredAlt;
         $imgExtras = $data['imgExtras'] ?? [];
         $altExtras = $data['altExtras'] ?? [];
-        $data['imgExtras'] = array_values(array_filter($imgExtras, fn($v) => $v !== '' && $v !== null));
-        $data['altExtras'] = array_values(array_filter($altExtras, fn($_, $i) => !empty($imgExtras[$i] ?? '')));
+        $filteredExtras = [];
+        $filteredAltExtras = [];
+        foreach (array_keys($imgExtras) as $i) {
+            $v = $imgExtras[$i] ?? '';
+            if ($v !== '' && $v !== null) {
+                $filteredExtras[] = $v;
+                $filteredAltExtras[] = $altExtras[$i] ?? '';
+            }
+        }
+        $data['imgExtras'] = $filteredExtras;
+        $data['altExtras'] = $filteredAltExtras;
         $data['videoClip'] = !empty($request->videoClip);
         $data['linkVideoClip'] = $data['linkVideoClip'] ?? '';
         Noticia::create($data);
-        return redirect()->route('admin.index')->with('success', 'Noticia creada.');
+        return redirect()->to(route('admin.index').'#noticias')->with('success', 'Noticia creada.');
     }
 
     public function updateNoticia(Request $request, $id)
@@ -77,22 +95,40 @@ class AdminController extends Controller
         ]);
         $img = $data['img'] ?? $noticia->img ?? [];
         $alt = $data['alt'] ?? $noticia->alt ?? [];
-        $data['img'] = array_values(array_filter($img, fn($v) => $v !== '' && $v !== null));
-        $data['alt'] = array_values(array_filter($alt, fn($_, $i) => !empty($img[$i] ?? '')));
+        $filteredImg = [];
+        $filteredAlt = [];
+        foreach (array_keys($img) as $i) {
+            $v = $img[$i] ?? '';
+            if ($v !== '' && $v !== null) {
+                $filteredImg[] = $v;
+                $filteredAlt[] = $alt[$i] ?? '';
+            }
+        }
+        $data['img'] = $filteredImg;
+        $data['alt'] = $filteredAlt;
         $imgExtras = $data['imgExtras'] ?? $noticia->imgExtras ?? [];
         $altExtras = $data['altExtras'] ?? $noticia->altExtras ?? [];
-        $data['imgExtras'] = array_values(array_filter($imgExtras, fn($v) => $v !== '' && $v !== null));
-        $data['altExtras'] = array_values(array_filter($altExtras, fn($_, $i) => !empty($imgExtras[$i] ?? '')));
+        $filteredExtras = [];
+        $filteredAltExtras = [];
+        foreach (array_keys($imgExtras) as $i) {
+            $v = $imgExtras[$i] ?? '';
+            if ($v !== '' && $v !== null) {
+                $filteredExtras[] = $v;
+                $filteredAltExtras[] = $altExtras[$i] ?? '';
+            }
+        }
+        $data['imgExtras'] = $filteredExtras;
+        $data['altExtras'] = $filteredAltExtras;
         $data['videoClip'] = !empty($request->videoClip);
         $data['linkVideoClip'] = $data['linkVideoClip'] ?? '';
         $noticia->update($data);
-        return redirect()->route('admin.index')->with('success', 'Noticia actualizada.');
+        return redirect()->to(route('admin.index').'#noticias')->with('success', 'Noticia actualizada.');
     }
 
     public function destroyNoticia($id)
     {
         Noticia::findOrFail($id)->delete();
-        return redirect()->route('admin.index')->with('success', 'Noticia eliminada.');
+        return redirect()->to(route('admin.index').'#noticias')->with('success', 'Noticia eliminada.');
     }
 
     public function createIntegrante()
@@ -119,7 +155,7 @@ class AdminController extends Controller
             'activo' => !empty($request->activo),
             'orden' => (int)($request->orden ?? 0),
         ]);
-        return redirect()->route('admin.index')->with('success', 'Integrante creado.');
+        return redirect()->to(route('admin.index').'#integrantes')->with('success', 'Integrante creado.');
     }
 
     public function updateIntegrante(Request $request, $id)
@@ -136,14 +172,14 @@ class AdminController extends Controller
             'activo' => !empty($request->activo),
             'orden' => (int)($request->orden ?? 0),
         ]);
-        return redirect()->route('admin.index')->with('success', 'Integrante actualizado.');
+        return redirect()->to(route('admin.index').'#integrantes')->with('success', 'Integrante actualizado.');
     }
 
     public function toggleIntegrante($id)
     {
         $i = Integrante::findOrFail($id);
         $i->update(['activo' => !$i->activo]);
-        return redirect()->route('admin.index')->with('success', $i->activo ? 'Integrante activado.' : 'Integrante inactivado.');
+        return redirect()->to(route('admin.index').'#integrantes')->with('success', $i->activo ? 'Integrante activado.' : 'Integrante inactivado.');
     }
 
     public function updateNosotros(Request $request)
@@ -161,7 +197,7 @@ class AdminController extends Controller
                 'imagen_portada' => $request->imagen_portada ?? '',
             ]
         );
-        return redirect()->route('admin.index')->with('success', 'Nosotros actualizado.');
+        return redirect()->to(route('admin.index').'#nosotros')->with('success', 'Nosotros actualizado.');
     }
 
     public function createEscuchanos()
@@ -187,7 +223,7 @@ class AdminController extends Controller
             'embed_url' => $request->embed_url,
             'orden' => (int)($request->orden ?? 0),
         ]);
-        return redirect()->route('admin.index')->with('success', 'Item de Spotify creado.');
+        return redirect()->to(route('admin.index').'#escuchanos')->with('success', 'Item de Spotify creado.');
     }
 
     public function updateEscuchanos(Request $request, $id)
@@ -202,13 +238,13 @@ class AdminController extends Controller
             'embed_url' => $request->embed_url,
             'orden' => (int)($request->orden ?? 0),
         ]);
-        return redirect()->route('admin.index')->with('success', 'Item actualizado.');
+        return redirect()->to(route('admin.index').'#escuchanos')->with('success', 'Item actualizado.');
     }
 
     public function destroyEscuchanos($id)
     {
         EscuchanosItem::findOrFail($id)->delete();
-        return redirect()->route('admin.index')->with('success', 'Item eliminado.');
+        return redirect()->to(route('admin.index').'#escuchanos')->with('success', 'Item eliminado.');
     }
 
     public function createFecha()
@@ -233,7 +269,7 @@ class AdminController extends Controller
             'costo' => $request->costo ?? '',
             'link_entradas' => $request->link_entradas ?? '',
         ]);
-        return redirect()->route('admin.index')->with('success', 'Fecha creada.');
+        return redirect()->to(route('admin.index').'#fechas')->with('success', 'Fecha creada.');
     }
 
     public function updateFecha(Request $request, $id)
@@ -247,12 +283,12 @@ class AdminController extends Controller
             'costo' => $request->costo ?? '',
             'link_entradas' => $request->link_entradas ?? '',
         ]);
-        return redirect()->route('admin.index')->with('success', 'Fecha actualizada.');
+        return redirect()->to(route('admin.index').'#fechas')->with('success', 'Fecha actualizada.');
     }
 
     public function destroyFecha($id)
     {
         Fecha::findOrFail($id)->delete();
-        return redirect()->route('admin.index')->with('success', 'Fecha eliminada.');
+        return redirect()->to(route('admin.index').'#fechas')->with('success', 'Fecha eliminada.');
     }
 }
