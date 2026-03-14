@@ -30,7 +30,11 @@
     @php
         $fechaVal = old('fecha', $noticia->fecha ?? null);
         if ($fechaVal) {
-            try { $fechaVal = \Carbon\Carbon::parse($fechaVal)->format('Y-m-d'); } catch (\Exception $e) { $fechaVal = date('Y-m-d'); }
+            try {
+                $fechaVal = \Carbon\Carbon::createFromFormat('d-m-Y', $fechaVal)->format('Y-m-d');
+            } catch (\Exception $e) {
+                try { $fechaVal = \Carbon\Carbon::parse($fechaVal)->format('Y-m-d'); } catch (\Exception $e) { $fechaVal = date('Y-m-d'); }
+            }
         } else {
             $fechaVal = date('Y-m-d');
         }

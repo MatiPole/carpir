@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow,noarchive">
     <title>@yield('title', 'Admin') | Carpir</title>
     <style>
         :root { --accent-red: #ff6b6b; --accent-blue: #0066cc; --dark-navy: #0a1628; --navy: #152238; --ff-sansation: 'Sansation', sans-serif; --ff-montserrat: 'Montserrat', sans-serif; }

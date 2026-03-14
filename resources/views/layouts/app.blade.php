@@ -3,10 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Somos Carpir, una banda de rock indie de Buenos Aires. Nuestro material puede escucharse en todas las plataformas">
-    <meta property="og:title" content="Carpir | Banda de rock indie">
-    <meta property="og:image" content="{{ asset('assets/img/carpir-logo.png') }}">
+    @php
+        $seoTitle = trim($__env->yieldContent('title', 'Carpir | Banda de Rock Indie'));
+        $seoDescription = trim($__env->yieldContent('meta_description', 'Somos Carpir, una banda de rock indie de Buenos Aires. Escuchanos en plataformas digitales y enterate de nuestras noticias y próximas fechas.'));
+        $seoCanonical = trim($__env->yieldContent('canonical', url()->current()));
+        $seoImage = trim($__env->yieldContent('meta_image', asset('assets/img/carpir-logo.png')));
+        $seoType = trim($__env->yieldContent('og_type', 'website'));
+        $seoRobots = trim($__env->yieldContent('meta_robots', 'index,follow,max-image-preview:large'));
+    @endphp
+    <meta name="description" content="{{ $seoDescription }}">
+    <meta name="robots" content="{{ $seoRobots }}">
+    <link rel="canonical" href="{{ $seoCanonical }}">
+    <meta property="og:locale" content="es_AR">
+    <meta property="og:type" content="{{ $seoType }}">
+    <meta property="og:title" content="{{ $seoTitle }}">
+    <meta property="og:description" content="{{ $seoDescription }}">
+    <meta property="og:url" content="{{ $seoCanonical }}">
+    <meta property="og:site_name" content="Carpir">
+    <meta property="og:image" content="{{ $seoImage }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $seoTitle }}">
+    <meta name="twitter:description" content="{{ $seoDescription }}">
+    <meta name="twitter:image" content="{{ $seoImage }}">
     <meta name="keywords" content="banda, rock band, Carpir, rock indie, rock nacional, Buenos Aires">
+    <meta name="theme-color" content="#0b0f19">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <link rel="apple-touch-icon" href="{{ asset('favicon.ico') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,6 +38,24 @@
     <link rel="stylesheet" href="{{ asset('assets/app.css') }}?v={{ filemtime(public_path('assets/app.css')) }}">
     @elseif(file_exists(public_path('assets/style.css')))
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}?v={{ filemtime(public_path('assets/style.css')) }}">
+    @endif
+    @hasSection('structured_data')
+        @yield('structured_data')
+    @else
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "MusicGroup",
+            "name": "Carpir",
+            "url": "{{ url('/') }}",
+            "logo": "{{ asset('assets/img/carpir-logo.png') }}",
+            "image": "{{ asset('assets/img/carpir-logo.png') }}",
+            "sameAs": [
+                "https://open.spotify.com/intl-es/artist/5NzTQJXFKyAX63I3Q7Or5y?si=gqrmldWbS2uDOtEv5xCnPw",
+                "https://www.instagram.com/carpirok/"
+            ]
+        }
+    </script>
     @endif
 </head>
 <body>

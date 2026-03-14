@@ -7,6 +7,8 @@ use App\Http\Controllers\FechaController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\UploadController;
+use App\Models\Noticia;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -14,6 +16,47 @@ Route::get('/noticias', [NoticiaController::class, 'index'])->name('noticias.ind
 Route::get('/noticias/{id}', [NoticiaController::class, 'show'])->name('noticias.show');
 Route::get('/fechas', [FechaController::class, 'index'])->name('fechas.index');
 Route::get('/escuchanos', [HomeController::class, 'escuchanos'])->name('escuchanos.index');
+Route::get('/sitemap.xml', function () {
+    $urls = [
+        [
+            'loc' => route('home'),
+            'lastmod' => now()->toDateString(),
+            'changefreq' => 'weekly',
+            'priority' => '1.0',
+        ],
+        [
+            'loc' => route('noticias.index'),
+            'lastmod' => now()->toDateString(),
+            'changefreq' => 'daily',
+            'priority' => '0.9',
+        ],
+        [
+            'loc' => route('fechas.index'),
+            'lastmod' => now()->toDateString(),
+            'changefreq' => 'daily',
+            'priority' => '0.8',
+        ],
+        [
+            'loc' => route('escuchanos.index'),
+            'lastmod' => now()->toDateString(),
+            'changefreq' => 'weekly',
+            'priority' => '0.7',
+        ],
+    ];
+
+    $noticias = Noticia::select(['id', 'updated_at'])->orderByDesc('updated_at')->get();
+    foreach ($noticias as $noticia) {
+        $urls[] = [
+            'loc' => route('noticias.show', $noticia->id),
+            'lastmod' => ($noticia->updated_at instanceof Carbon ? $noticia->updated_at : now())->toDateString(),
+            'changefreq' => 'monthly',
+            'priority' => '0.6',
+        ];
+    }
+
+    $xml = view('sitemap', ['urls' => $urls])->render();
+    return response($xml, 200)->header('Content-Type', 'application/xml');
+})->name('sitemap');
 
 Route::post('/contacto', [ContactController::class, 'store'])->name('contacto.store');
 

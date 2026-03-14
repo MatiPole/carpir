@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('title', 'Noticias | Carpir')
+@section('meta_description', 'Noticias de Carpir: lanzamientos, novedades, videos y todo lo que pasa con la banda.')
+@section('canonical', route('noticias.index'))
 
 @section('content')
 <div class="noticias-page">

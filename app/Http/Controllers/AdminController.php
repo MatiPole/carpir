@@ -7,6 +7,7 @@ use App\Models\Fecha;
 use App\Models\Integrante;
 use App\Models\NosotrosConfig;
 use App\Models\Noticia;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,7 +39,7 @@ class AdminController extends Controller
     {
         $data = $request->validate([
             'titulo' => 'required|string',
-            'fecha' => 'required|string',
+            'fecha' => 'required|date_format:Y-m-d',
             'noticia' => 'required|string',
             'img' => 'nullable|array',
             'alt' => 'nullable|array',
@@ -75,6 +76,7 @@ class AdminController extends Controller
         $data['altExtras'] = $filteredAltExtras;
         $data['videoClip'] = !empty($request->videoClip);
         $data['linkVideoClip'] = $data['linkVideoClip'] ?? '';
+        $data['fecha'] = Carbon::createFromFormat('Y-m-d', $data['fecha'])->format('d-m-Y');
         Noticia::create($data);
         return redirect()->to(route('admin.index').'#noticias')->with('success', 'Noticia creada.');
     }
@@ -84,7 +86,7 @@ class AdminController extends Controller
         $noticia = Noticia::findOrFail($id);
         $data = $request->validate([
             'titulo' => 'required|string',
-            'fecha' => 'required|string',
+            'fecha' => 'required|date_format:Y-m-d',
             'noticia' => 'required|string',
             'img' => 'nullable|array',
             'alt' => 'nullable|array',
@@ -121,6 +123,7 @@ class AdminController extends Controller
         $data['altExtras'] = $filteredAltExtras;
         $data['videoClip'] = !empty($request->videoClip);
         $data['linkVideoClip'] = $data['linkVideoClip'] ?? '';
+        $data['fecha'] = Carbon::createFromFormat('Y-m-d', $data['fecha'])->format('d-m-Y');
         $noticia->update($data);
         return redirect()->to(route('admin.index').'#noticias')->with('success', 'Noticia actualizada.');
     }

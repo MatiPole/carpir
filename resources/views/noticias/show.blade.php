@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', $noticia->titulo . ' | Carpir')
+@section('meta_description', \Illuminate\Support\Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags($noticia->noticia))), 155, '...'))
+@section('canonical', route('noticias.show', $noticia->id))
+@section('og_type', 'article')
 
 @section('content')
 <article class="noticia-detalle section">

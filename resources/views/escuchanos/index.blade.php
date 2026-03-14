@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('title', 'Escuchanos | Carpir')
+@section('meta_description', 'Escuchá la música de Carpir en Spotify y seguí las novedades de la banda.')
+@section('canonical', route('escuchanos.index'))
 
 @section('content')
 <div class="escuchanos-page">

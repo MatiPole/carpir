@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('title', 'Carpir | Banda de Rock Indie')
+@section('meta_description', 'Carpir es una banda de rock indie de Buenos Aires. Escuchá nuestra música, mirá próximas fechas y enterate de las últimas noticias.')
+@section('canonical', route('home'))
 
 @section('content')
 <div class="home">

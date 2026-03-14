@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('title', 'Próximas fechas | Carpir')
+@section('meta_description', 'Consultá las próximas fechas de Carpir, lugares, horarios y links para entradas.')
+@section('canonical', route('fechas.index'))
 
 @section('content')
 <div class="fechas-page">
