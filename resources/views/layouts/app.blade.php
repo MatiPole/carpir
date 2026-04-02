@@ -32,7 +32,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     @if(! empty($lcpImagePreload ?? null))
-    <link rel="preload" as="image" href="{{ $lcpImagePreload }}">
+    <link rel="preload" as="image" href="{{ $lcpImagePreload }}" fetchpriority="high">
     @endif
     @php
         $fontsCss = 'https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@400;500;700&display=swap';
@@ -81,40 +81,33 @@
 </head>
 <body>
     @unless(request()->routeIs('login') || request()->routeIs('admin.index'))
-    <header class="header" id="site-header"
-            x-data="{ navOpen: false }"
-            x-effect="document.body.style.overflow = navOpen ? 'hidden' : ''; document.documentElement.style.overflow = navOpen ? 'hidden' : ''"
-            @keydown.escape.window="navOpen = false"
-            @resize.window="if (window.innerWidth > 768) navOpen = false"
-            :class="{ 'header--menu-open': navOpen }">
+    <header class="header" id="site-header">
         <nav class="navbar" aria-label="Navegación principal">
             <div class="navbar-container">
                 <a href="{{ route('home') }}" class="navbar-brand">
-                    <img src="{{ asset('assets/img/carpir-logo.png') }}" alt="Logo Carpir" class="logo-header">
+                    <img src="{{ asset('assets/img/carpir-logo.png') }}" alt="Logo Carpir" class="logo-header" width="150" height="50" decoding="async">
                 </a>
                 <button type="button"
                         class="navbar-toggler"
-                        :class="{ 'active': navOpen }"
-                        :aria-label="navOpen ? 'Cerrar menú' : 'Abrir menú'"
-                        :aria-expanded="navOpen"
+                        aria-label="Abrir menú"
+                        aria-expanded="false"
                         aria-controls="navbar-nav"
-                        @click="navOpen = !navOpen">
+                        data-nav-toggle>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                 </button>
             </div>
             <div class="navbar-backdrop"
-                 :aria-hidden="!navOpen"
-                 tabindex="-1"
-                 @click="navOpen = false"></div>
-            <ul class="navbar-nav" id="navbar-nav" role="menubar" :class="{ 'active': navOpen }">
-                <li class="nav-item" role="none"><a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" role="menuitem" @click="navOpen = false">Home</a></li>
-                <li class="nav-item" role="none"><a href="{{ url('/#nosotros') }}" class="nav-link" role="menuitem" @click="navOpen = false">Nosotros</a></li>
-                <li class="nav-item" role="none"><a href="{{ url('/#proximas-fechas') }}" class="nav-link" role="menuitem" @click="navOpen = false">Fechas</a></li>
-                <li class="nav-item" role="none"><a href="{{ url('/#escuchanos') }}" class="nav-link" role="menuitem" @click="navOpen = false">Escuchanos</a></li>
-                <li class="nav-item" role="none"><a href="{{ url('/#noticias') }}" class="nav-link" role="menuitem" @click="navOpen = false">Noticias</a></li>
-                <li class="nav-item" role="none"><a href="{{ url('/#contacto') }}" class="nav-link" role="menuitem" @click="navOpen = false">Contacto</a></li>
+                 aria-hidden="true"
+                 tabindex="-1"></div>
+            <ul class="navbar-nav" id="navbar-nav" role="menubar">
+                <li class="nav-item" role="none"><a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" role="menuitem">Home</a></li>
+                <li class="nav-item" role="none"><a href="{{ url('/#nosotros') }}" class="nav-link" role="menuitem">Nosotros</a></li>
+                <li class="nav-item" role="none"><a href="{{ url('/#proximas-fechas') }}" class="nav-link" role="menuitem">Fechas</a></li>
+                <li class="nav-item" role="none"><a href="{{ url('/#escuchanos') }}" class="nav-link" role="menuitem">Escuchanos</a></li>
+                <li class="nav-item" role="none"><a href="{{ url('/#noticias') }}" class="nav-link" role="menuitem">Noticias</a></li>
+                <li class="nav-item" role="none"><a href="{{ url('/#contacto') }}" class="nav-link" role="menuitem">Contacto</a></li>
             </ul>
         </nav>
     </header>
@@ -136,10 +129,10 @@
             </div>
             <div class="redes-sociales">
                 <a href="https://open.spotify.com/intl-es/artist/5NzTQJXFKyAX63I3Q7Or5y?si=gqrmldWbS2uDOtEv5xCnPw" target="_blank" rel="noopener noreferrer" aria-label="Spotify">
-                    <img src="{{ asset('assets/img/spotify.png') }}" alt="Spotify">
+                    <img src="{{ asset('assets/img/spotify.png') }}" alt="Spotify" width="60" height="60" decoding="async">
                 </a>
                 <a href="https://www.instagram.com/carpirok/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                    <img src="{{ asset('assets/img/instagram.png') }}" alt="Instagram">
+                    <img src="{{ asset('assets/img/instagram.png') }}" alt="Instagram" width="60" height="60" decoding="async">
                 </a>
             </div>
             <div class="copyright">
@@ -150,6 +143,7 @@
     @endunless
 
     @stack('scripts')
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js"></script>
+    <script defer src="{{ asset('assets/site-nav.js') }}?v={{ filemtime(public_path('assets/site-nav.js')) }}"></script>
+    <script defer src="{{ asset('assets/deferred-embeds.js') }}?v={{ filemtime(public_path('assets/deferred-embeds.js')) }}"></script>
 </body>
 </html>

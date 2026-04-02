@@ -1,4 +1,11 @@
 (function () {
+  /** Espera dos frames tras mutar clases para leer geometría sin forzar reflow síncrono. */
+  function afterLayoutStable(cb) {
+    requestAnimationFrame(function () {
+      requestAnimationFrame(cb);
+    });
+  }
+
   function initExpandable(root) {
     root = root || document;
     root.querySelectorAll('[data-noticia-expandable]').forEach(function (wrap) {
@@ -9,7 +16,7 @@
       wrap.classList.remove('is-expanded');
       btn.textContent = 'Ver más';
       btn.setAttribute('aria-expanded', 'false');
-      requestAnimationFrame(function () {
+      afterLayoutStable(function () {
         var overflow = inner.scrollHeight > inner.clientHeight + 1;
         if (!overflow) {
           wrap.classList.remove('is-collapsed');
@@ -35,7 +42,7 @@
       var btn = wrap.querySelector('.noticia-ver-mas-btn');
       if (!inner || !btn) return;
       wrap.classList.add('is-collapsed');
-      requestAnimationFrame(function () {
+      afterLayoutStable(function () {
         var overflow = inner.scrollHeight > inner.clientHeight + 1;
         if (!overflow) {
           wrap.classList.remove('is-collapsed');

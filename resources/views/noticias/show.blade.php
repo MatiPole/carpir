@@ -24,9 +24,9 @@
             @if($url)
             <figure>
                 @if($isVideoUrl($url))
-                <video src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" controls playsinline></video>
+                <video src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" controls playsinline width="800" height="450"></video>
                 @else
-                <img src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" alt="{{ is_array($noticia->alt) ? ($noticia->alt[$idx] ?? '') : '' }}">
+                <img src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" alt="{{ is_array($noticia->alt) ? ($noticia->alt[$idx] ?? '') : '' }}" width="800" height="800" decoding="async">
                 @endif
             </figure>
             @endif
@@ -40,9 +40,9 @@
             @if($url)
             <figure>
                 @if($isVideoUrl($url))
-                <video src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" controls playsinline></video>
+                <video src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" controls playsinline width="800" height="450"></video>
                 @else
-                <img src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" alt="{{ is_array($noticia->altExtras) ? ($noticia->altExtras[$idx] ?? '') : '' }}">
+                <img src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" alt="{{ is_array($noticia->altExtras) ? ($noticia->altExtras[$idx] ?? '') : '' }}" width="800" height="800" decoding="async">
                 @endif
             </figure>
             @endif

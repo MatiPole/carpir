@@ -28,9 +28,9 @@
                         @endif
                         @foreach($imgs as $idx => $url)
                         @if($isVideoUrl($url))
-                        <video src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" controls class="carousel-img {{ $idx === 0 ? 'active' : '' }}" playsinline></video>
+                        <video src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" controls class="carousel-img {{ $idx === 0 ? 'active' : '' }}" width="800" height="450" playsinline></video>
                         @else
-                        <img src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" alt="{{ $alts[$idx] ?? '' }}" class="carousel-img {{ $idx === 0 ? 'active' : '' }}">
+                        <img src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" alt="{{ $alts[$idx] ?? '' }}" class="carousel-img {{ $idx === 0 ? 'active' : '' }}" width="800" height="800" decoding="async">
                         @endif
                         @endforeach
                         @if(count($imgs) > 1)
@@ -76,7 +76,7 @@
             <div class="modal-carousel">
                 <button type="button" class="modal-carousel-button prev" aria-label="Anterior">‹</button>
                 <div class="modal-carousel-content">
-                    <img src="" alt="" class="modal-media modal-media-img" id="modal-media-img">
+                    <img src="" alt="" class="modal-media modal-media-img" id="modal-media-img" width="800" height="800" decoding="async">
                     <video src="" controls class="modal-media modal-media-video" id="modal-media-video" style="display:none;" playsinline></video>
                 </div>
                 <button type="button" class="modal-carousel-button next" aria-label="Siguiente">›</button>

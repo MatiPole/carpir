@@ -26,7 +26,7 @@
             @foreach($integrantes as $i)
             <div class="integrante-card">
                 @if($i->imagen)
-                <img src="{{ (str_starts_with($i->imagen, 'http') || str_starts_with($i->imagen, '/')) ? $i->imagen : asset($i->imagen) }}" alt="{{ $i->nombre }}" loading="lazy" decoding="async">
+                <img src="{{ (str_starts_with($i->imagen, 'http') || str_starts_with($i->imagen, '/')) ? $i->imagen : asset($i->imagen) }}" alt="{{ $i->nombre }}" width="200" height="200" loading="lazy" decoding="async">
                 @endif
                 <h3>{{ $i->nombre }}</h3>
                 <p>{{ $i->rol }}</p>
@@ -85,7 +85,7 @@
             @foreach($escuchanos as $it)
             <div class="reproductor">
                 @if($it->titulo)<h3>{{ $it->titulo }}</h3>@endif
-                <iframe src="{{ $it->embed_url }}" width="100%" height="{{ $it->titulo ? 380 : 352 }}" style="border-radius:12px" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="{{ $it->titulo ?? 'Spotify' }}"></iframe>
+                <iframe data-src="{{ $it->embed_url }}" width="100%" height="{{ $it->titulo ? 380 : 352 }}" style="border:0;border-radius:12px;max-width:100%;display:block" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="{{ $it->titulo ?? 'Spotify' }}"></iframe>
             </div>
             @endforeach
         </div>
@@ -117,9 +117,9 @@
                     @foreach($imgs as $idx => $url)
                     @if($url)
                     @if($isVideoUrl($url))
-                    <video src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" controls class="carousel-image {{ $idx === 0 ? 'active' : '' }}" playsinline></video>
+                    <video src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" controls class="carousel-image {{ $idx === 0 ? 'active' : '' }}" width="800" height="450" playsinline></video>
                     @else
-                    <img src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" alt="{{ $alts[$idx] ?? '' }}" class="carousel-image {{ $idx === 0 ? 'active' : '' }}" @if($idx > 0) loading="lazy" @endif decoding="async">
+                    <img src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" alt="{{ $alts[$idx] ?? '' }}" class="carousel-image {{ $idx === 0 ? 'active' : '' }}" width="800" height="800" @if($idx > 0) loading="lazy" @endif decoding="async">
                     @endif
                     @endif
                     @endforeach

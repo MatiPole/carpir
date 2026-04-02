@@ -16,7 +16,7 @@
             @foreach($escuchanos as $it)
             <div class="reproductor">
                 @if($it->titulo)<h3>{{ $it->titulo }}</h3>@endif
-                <iframe src="{{ $it->embed_url }}" width="100%" height="{{ $it->titulo ? 380 : 352 }}" style="border-radius:12px" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="{{ $it->titulo ?? 'Spotify' }}"></iframe>
+                <iframe data-src="{{ $it->embed_url }}" width="100%" height="{{ $it->titulo ? 380 : 352 }}" style="border:0;border-radius:12px;max-width:100%;display:block" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="{{ $it->titulo ?? 'Spotify' }}"></iframe>
             </div>
             @endforeach
         </div>
