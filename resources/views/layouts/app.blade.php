@@ -42,19 +42,22 @@
     @hasSection('structured_data')
         @yield('structured_data')
     @else
+    @php
+        $defaultSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'MusicGroup',
+            'name' => 'Carpir',
+            'url' => url('/'),
+            'logo' => asset('assets/img/carpir-logo.png'),
+            'image' => asset('assets/img/carpir-logo.png'),
+            'sameAs' => [
+                'https://open.spotify.com/intl-es/artist/5NzTQJXFKyAX63I3Q7Or5y?si=gqrmldWbS2uDOtEv5xCnPw',
+                'https://www.instagram.com/carpirok/',
+            ],
+        ];
+    @endphp
     <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "MusicGroup",
-            "name": "Carpir",
-            "url": "{{ url('/') }}",
-            "logo": "{{ asset('assets/img/carpir-logo.png') }}",
-            "image": "{{ asset('assets/img/carpir-logo.png') }}",
-            "sameAs": [
-                "https://open.spotify.com/intl-es/artist/5NzTQJXFKyAX63I3Q7Or5y?si=gqrmldWbS2uDOtEv5xCnPw",
-                "https://www.instagram.com/carpirok/"
-            ]
-        }
+        {!! json_encode($defaultSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}
     </script>
     @endif
 </head>

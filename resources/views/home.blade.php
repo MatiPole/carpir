@@ -159,44 +159,69 @@
     <section id="contacto" class="section contacto-section">
         <div class="contacto-container">
             <h2 class="section-title">Contacto</h2>
+            <p class="contacto-intro">¿Querés escribirnos por fechas, prensa o colaboración? Completá el formulario y te respondemos a la brevedad.</p>
             @if(session('contact_success'))
-                <div class="success-message">{{ session('contact_success') }}</div>
+                <div class="success-message" role="status">{{ session('contact_success') }}</div>
             @endif
             @if(session('contact_error'))
-                <div class="contact-error-message">{{ session('contact_error') }}</div>
+                <div class="contact-error-message" role="alert">{{ session('contact_error') }}</div>
             @endif
             <div class="contacto-content">
-                <form class="contacto-form" method="POST" action="{{ route('contacto.store') }}">
-                    @csrf
-                    <div class="form-control {{ $errors->has('name') ? 'error' : '' }}">
-                        <label for="contact-name">Nombre <span class="required">*</span></label>
-                        <input type="text" id="contact-name" name="name" value="{{ old('name') }}" placeholder="Tu nombre" required>
-                        @error('name')<small>{{ $message }}</small>@enderror
+                <div class="contacto-panel">
+                    <div class="contacto-card contacto-info-card">
+                        <h3>Hablemos</h3>
+                        <p>Usá este canal para consultas, contrataciones, prensa o cualquier mensaje relacionado con la banda.</p>
+                        <div class="contacto-info-list">
+                            <p><strong>Email:</strong> <a href="mailto:carpirok@gmail.com">carpirok@gmail.com</a></p>
+                            <p><strong>Ubicación:</strong> Buenos Aires, Argentina</p>
+                            <p><strong>Respuesta:</strong> Habitualmente dentro de 24 a 48 hs.</p>
+                        </div>
                     </div>
-                    <div class="form-control {{ $errors->has('lastname') ? 'error' : '' }}">
-                        <label for="contact-lastname">Apellido <span class="required">*</span></label>
-                        <input type="text" id="contact-lastname" name="lastname" value="{{ old('lastname') }}" placeholder="Tu apellido" required>
-                        @error('lastname')<small>{{ $message }}</small>@enderror
-                    </div>
-                    <div class="form-control {{ $errors->has('email') ? 'error' : '' }}">
-                        <label for="contact-email">Email <span class="required">*</span></label>
-                        <input type="email" id="contact-email" name="email" value="{{ old('email') }}" placeholder="tu@email.com" required>
-                        @error('email')<small>{{ $message }}</small>@enderror
-                    </div>
-                    <div class="form-control {{ $errors->has('phone') ? 'error' : '' }}">
-                        <label for="contact-phone">Teléfono <span class="required">*</span></label>
-                        <input type="tel" id="contact-phone" name="phone" value="{{ old('phone') }}" placeholder="1123456789" required>
-                        @error('phone')<small>{{ $message }}</small>@enderror
-                    </div>
-                    <div class="form-control {{ $errors->has('comments') ? 'error' : '' }}">
-                        <label for="contact-comments">Mensaje <span class="required">*</span></label>
-                        <textarea id="contact-comments" name="comments" rows="5" placeholder="Escribe tu mensaje aquí (mínimo 20 caracteres)" required>{{ old('comments') }}</textarea>
-                        @error('comments')<small>{{ $message }}</small>@enderror
-                    </div>
-                    <button type="submit" class="submit-button">Enviar Mensaje</button>
-                </form>
+
+                    <form class="contacto-form contacto-card" method="POST" action="{{ route('contacto.store') }}" id="contactForm">
+                        @csrf
+                        <input type="text" name="website" value="" tabindex="-1" autocomplete="off" class="contacto-honeypot" aria-hidden="true">
+
+                        <div class="contacto-grid">
+                            <div class="form-control {{ $errors->has('name') ? 'error' : '' }}">
+                                <label for="contact-name">Nombre <span class="required">*</span></label>
+                                <input type="text" id="contact-name" name="name" value="{{ old('name') }}" placeholder="Tu nombre" autocomplete="given-name" required>
+                                @error('name')<small>{{ $message }}</small>@enderror
+                            </div>
+                            <div class="form-control {{ $errors->has('lastname') ? 'error' : '' }}">
+                                <label for="contact-lastname">Apellido <span class="required">*</span></label>
+                                <input type="text" id="contact-lastname" name="lastname" value="{{ old('lastname') }}" placeholder="Tu apellido" autocomplete="family-name" required>
+                                @error('lastname')<small>{{ $message }}</small>@enderror
+                            </div>
+                            <div class="form-control {{ $errors->has('email') ? 'error' : '' }}">
+                                <label for="contact-email">Email <span class="required">*</span></label>
+                                <input type="email" id="contact-email" name="email" value="{{ old('email') }}" placeholder="tu@email.com" autocomplete="email" inputmode="email" required>
+                                @error('email')<small>{{ $message }}</small>@enderror
+                            </div>
+                            <div class="form-control {{ $errors->has('phone') ? 'error' : '' }}">
+                                <label for="contact-phone">Teléfono <span class="required">*</span></label>
+                                <input type="tel" id="contact-phone" name="phone" value="{{ old('phone') }}" placeholder="+54 11 2345 6789" autocomplete="tel" inputmode="tel" required>
+                                @error('phone')<small>{{ $message }}</small>@enderror
+                            </div>
+                        </div>
+
+                        <div class="form-control {{ $errors->has('comments') ? 'error' : '' }}">
+                            <label for="contact-comments">Mensaje <span class="required">*</span></label>
+                            <textarea id="contact-comments" name="comments" rows="6" placeholder="Escribinos tu mensaje" required>{{ old('comments') }}</textarea>
+                            <span class="contacto-help">Solo necesitamos que el mensaje no esté vacío.</span>
+                            @error('comments')<small>{{ $message }}</small>@enderror
+                        </div>
+
+                        <div class="contacto-actions">
+                            <button type="submit" class="submit-button">
+                                <span class="submit-label">Enviar mensaje</span>
+                            </button>
+                            <p class="contacto-privacy">Tus datos se usan únicamente para responder esta consulta.</p>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="info-contacto-seccion" style="margin-top:2rem">
+            <div class="info-contacto-seccion">
                 <p>carpirok@gmail.com</p>
                 <p>Buenos Aires, Argentina</p>
             </div>
@@ -204,3 +229,21 @@
     </section>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+(function () {
+    var form = document.getElementById('contactForm');
+    if (!form) return;
+
+    form.addEventListener('submit', function () {
+        var button = form.querySelector('button[type="submit"]');
+        if (!button) return;
+        button.disabled = true;
+        button.classList.add('is-loading');
+        var label = button.querySelector('.submit-label');
+        if (label) label.textContent = 'Enviando...';
+    });
+})();
+</script>
+@endpush

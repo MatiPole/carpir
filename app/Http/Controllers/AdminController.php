@@ -15,7 +15,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $noticias = Noticia::orderBy('created_at', 'desc')->orderBy('id', 'desc')->get();
+        $noticias = Noticia::orderByFechaNewestFirst()->orderBy('id', 'desc')->get();
         $integrantes = Integrante::orderBy('orden')->orderBy('id')->get();
         $nosotros = NosotrosConfig::getConfig();
         $escuchanos = EscuchanosItem::orderBy('orden')->orderBy('id')->get();

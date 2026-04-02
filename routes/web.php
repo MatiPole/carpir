@@ -44,7 +44,7 @@ Route::get('/sitemap.xml', function () {
         ],
     ];
 
-    $noticias = Noticia::select(['id', 'updated_at'])->orderByDesc('updated_at')->get();
+    $noticias = Noticia::select(['id', 'updated_at', 'fecha'])->orderByFechaNewestFirst()->get();
     foreach ($noticias as $noticia) {
         $urls[] = [
             'loc' => route('noticias.show', $noticia->id),
@@ -58,7 +58,7 @@ Route::get('/sitemap.xml', function () {
     return response($xml, 200)->header('Content-Type', 'application/xml');
 })->name('sitemap');
 
-Route::post('/contacto', [ContactController::class, 'store'])->name('contacto.store');
+Route::post('/contacto', [ContactController::class, 'store'])->middleware('throttle:5,1')->name('contacto.store');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
