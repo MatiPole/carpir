@@ -18,7 +18,15 @@ class HomeController extends Controller
         $noticias = Noticia::orderByFechaNewestFirst()->orderBy('id', 'desc')->take(3)->get();
         $integrantes = Integrante::where('activo', true)->orderBy('orden')->orderBy('id')->get();
 
-        return view('home', compact('nosotros', 'fechas', 'escuchanos', 'noticias', 'integrantes'));
+        $lcpImagePreload = null;
+        $portada = $nosotros->imagen_portada ?? null;
+        if ($portada) {
+            $lcpImagePreload = str_starts_with($portada, 'http')
+                ? $portada
+                : (str_starts_with($portada, '/') ? url($portada) : asset($portada));
+        }
+
+        return view('home', compact('nosotros', 'fechas', 'escuchanos', 'noticias', 'integrantes', 'lcpImagePreload'));
     }
 
     public function escuchanos()

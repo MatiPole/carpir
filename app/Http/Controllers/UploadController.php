@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AdminUploadImageOptimizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -55,6 +56,26 @@ class UploadController extends Controller
             if (!Storage::disk('public')->exists($dir)) {
                 Storage::disk('public')->makeDirectory($dir);
             }
+
+            if ($type === 'img' && $this->shouldOptimizeImageMime($mime)) {
+                $baseName = Str::uuid()->toString();
+                $diskDir = Storage::disk('public')->path($dir);
+                $optimized = AdminUploadImageOptimizer::optimizeToDirectory(
+                    $file->getRealPath(),
+                    $diskDir,
+                    $baseName,
+                    (int) config('image_upload.max_edge', 1920),
+                    (int) config('image_upload.webp_quality', 82),
+                    (int) config('image_upload.jpeg_quality', 82),
+                );
+                if ($optimized !== null) {
+                    $path = $dir . '/' . $optimized['filename'];
+                    $url = '/storage/' . str_replace('\\', '/', $path);
+
+                    return response()->json(['url' => $url, 'filename' => $optimized['filename']]);
+                }
+            }
+
             $ext = $file->getClientOriginalExtension() ?: $file->guessExtension();
             $safeName = Str::uuid()->toString() . ($ext ? '.' . $ext : '');
             $path = $file->storeAs($dir, $safeName, 'public');
@@ -64,5 +85,16 @@ class UploadController extends Controller
             $message = config('app.debug') ? $e->getMessage() : 'Error al guardar el archivo. Revisá permisos de storage/app/public.';
             return response()->json(['error' => $message], 500);
         }
+    }
+
+    private function shouldOptimizeImageMime(string $mime): bool
+    {
+        $skip = [
+            'image/svg+xml',
+            'image/gif',
+            'image/x-icon',
+        ];
+
+        return ! in_array($mime, $skip, true);
     }
 }

@@ -31,13 +31,31 @@
     <link rel="apple-touch-icon" href="{{ asset('favicon.ico') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    @if(! empty($lcpImagePreload ?? null))
+    <link rel="preload" as="image" href="{{ $lcpImagePreload }}">
+    @endif
+    @php
+        $fontsCss = 'https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@400;500;700&display=swap';
+        $appCssHrefs = [];
+        if (file_exists(public_path('assets/app.css'))) {
+            $appCssHrefs[] = asset('assets/app.css').'?v='.filemtime(public_path('assets/app.css'));
+        } elseif (file_exists(public_path('assets/style.css'))) {
+            $appCssHrefs[] = asset('assets/style.css').'?v='.filemtime(public_path('assets/style.css'));
+        }
+    @endphp
+    <link href="{{ $fontsCss }}" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="{{ $fontsCss }}" rel="stylesheet"></noscript>
     <title>@yield('title', 'Carpir | Banda de Rock Indie')</title>
     @stack('styles')
-    @if(file_exists(public_path('assets/app.css')))
-    <link rel="stylesheet" href="{{ asset('assets/app.css') }}?v={{ filemtime(public_path('assets/app.css')) }}">
-    @elseif(file_exists(public_path('assets/style.css')))
-    <link rel="stylesheet" href="{{ asset('assets/style.css') }}?v={{ filemtime(public_path('assets/style.css')) }}">
+    @foreach($appCssHrefs as $cssHref)
+    <link rel="stylesheet" href="{{ $cssHref }}" media="print" onload="this.media='all'">
+    @endforeach
+    @if(!empty($appCssHrefs))
+    <noscript>
+        @foreach($appCssHrefs as $cssHref)
+        <link rel="stylesheet" href="{{ $cssHref }}">
+        @endforeach
+    </noscript>
     @endif
     @hasSection('structured_data')
         @yield('structured_data')

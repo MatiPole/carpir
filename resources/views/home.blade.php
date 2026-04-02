@@ -8,9 +8,9 @@
 <div class="home">
     <section id="nosotros" class="nosotros-section section">
         <h2 class="section-title">Nosotros</h2>
-        @if($nosotros->imagen_portada ?? null)
+        @if(! empty($lcpImagePreload))
         <div class="nosotros-portada">
-            <img src="{{ (str_starts_with($nosotros->imagen_portada ?? '', 'http') || str_starts_with($nosotros->imagen_portada ?? '', '/')) ? $nosotros->imagen_portada : asset($nosotros->imagen_portada) }}" alt="Carpir">
+            <img src="{{ $lcpImagePreload }}" alt="Carpir — imagen de la banda" decoding="async" fetchpriority="high" width="1200" height="500" sizes="(max-width: 768px) 100vw, min(900px, 100vw)">
         </div>
         @endif
         <div class="nosotros-texto">
@@ -26,7 +26,7 @@
             @foreach($integrantes as $i)
             <div class="integrante-card">
                 @if($i->imagen)
-                <img src="{{ (str_starts_with($i->imagen, 'http') || str_starts_with($i->imagen, '/')) ? $i->imagen : asset($i->imagen) }}" alt="{{ $i->nombre }}">
+                <img src="{{ (str_starts_with($i->imagen, 'http') || str_starts_with($i->imagen, '/')) ? $i->imagen : asset($i->imagen) }}" alt="{{ $i->nombre }}" loading="lazy" decoding="async">
                 @endif
                 <h3>{{ $i->nombre }}</h3>
                 <p>{{ $i->rol }}</p>
@@ -119,7 +119,7 @@
                     @if($isVideoUrl($url))
                     <video src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" controls class="carousel-image {{ $idx === 0 ? 'active' : '' }}" playsinline></video>
                     @else
-                    <img src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" alt="{{ $alts[$idx] ?? '' }}" class="carousel-image {{ $idx === 0 ? 'active' : '' }}">
+                    <img src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" alt="{{ $alts[$idx] ?? '' }}" class="carousel-image {{ $idx === 0 ? 'active' : '' }}" @if($idx > 0) loading="lazy" @endif decoding="async">
                     @endif
                     @endif
                     @endforeach
