@@ -2,7 +2,7 @@
 
 return [
 
-    'max_edge' => (int) env('IMAGE_UPLOAD_MAX_EDGE', 1920),
+    'max_edge' => (int) env('IMAGE_UPLOAD_MAX_EDGE', 1200),
 
     'webp_quality' => (int) env('IMAGE_UPLOAD_WEBP_QUALITY', 82),
 

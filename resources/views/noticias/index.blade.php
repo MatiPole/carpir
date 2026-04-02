@@ -30,7 +30,7 @@
                         @if($isVideoUrl($url))
                         <video src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" controls class="carousel-img {{ $idx === 0 ? 'active' : '' }}" width="800" height="450" playsinline></video>
                         @else
-                        <img src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" alt="{{ $alts[$idx] ?? '' }}" class="carousel-img {{ $idx === 0 ? 'active' : '' }}" width="800" height="800" decoding="async">
+                        <img src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" alt="{{ $alts[$idx] ?? '' }}" class="carousel-img {{ $idx === 0 ? 'active' : '' }}" width="800" height="800" sizes="(max-width: 768px) 100vw, 50vw" decoding="async">
                         @endif
                         @endforeach
                         @if(count($imgs) > 1)

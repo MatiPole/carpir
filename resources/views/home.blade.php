@@ -26,7 +26,7 @@
             @foreach($integrantes as $i)
             <div class="integrante-card">
                 @if($i->imagen)
-                <img src="{{ (str_starts_with($i->imagen, 'http') || str_starts_with($i->imagen, '/')) ? $i->imagen : asset($i->imagen) }}" alt="{{ $i->nombre }}" width="200" height="200" loading="lazy" decoding="async">
+                <img src="{{ (str_starts_with($i->imagen, 'http') || str_starts_with($i->imagen, '/')) ? $i->imagen : asset($i->imagen) }}" alt="{{ $i->nombre }}" width="200" height="200" sizes="(max-width: 600px) 150px, 200px" loading="lazy" decoding="async">
                 @endif
                 <h3>{{ $i->nombre }}</h3>
                 <p>{{ $i->rol }}</p>
@@ -119,7 +119,7 @@
                     @if($isVideoUrl($url))
                     <video src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" controls class="carousel-image {{ $idx === 0 ? 'active' : '' }}" width="800" height="450" playsinline></video>
                     @else
-                    <img src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" alt="{{ $alts[$idx] ?? '' }}" class="carousel-image {{ $idx === 0 ? 'active' : '' }}" width="800" height="800" @if($idx > 0) loading="lazy" @endif decoding="async">
+                    <img src="{{ (str_starts_with($url, 'http') || str_starts_with($url, '/')) ? $url : asset($url) }}" alt="{{ $alts[$idx] ?? '' }}" class="carousel-image {{ $idx === 0 ? 'active' : '' }}" width="800" height="800" sizes="(max-width: 768px) 100vw, 50vw" @if($idx > 0) loading="lazy" @endif decoding="async">
                     @endif
                     @endif
                     @endforeach
