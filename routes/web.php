@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/noticias', [NoticiaController::class, 'index'])->name('noticias.index');
+Route::permanentRedirect('/noticias.html', '/noticias');
 Route::get('/noticias/{id}', [NoticiaController::class, 'show'])->name('noticias.show');
 Route::get('/fechas', [FechaController::class, 'index'])->name('fechas.index');
 Route::get('/escuchanos', [HomeController::class, 'escuchanos'])->name('escuchanos.index');

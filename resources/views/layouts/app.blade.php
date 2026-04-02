@@ -43,20 +43,15 @@
             $appCssHrefs[] = asset('assets/style.css').'?v='.filemtime(public_path('assets/style.css'));
         }
     @endphp
+    <title>@yield('title', 'Carpir | Banda de Rock Indie')</title>
+    {{-- CSS principal: enlace normal para evitar FOUC (media=print + onload retrasaba todo el diseño). --}}
+    @foreach($appCssHrefs as $cssHref)
+    <link rel="stylesheet" href="{{ $cssHref }}">
+    @endforeach
+    @stack('styles')
+    {{-- Fuentes: asíncronas respecto al primer pintado; el texto usa fallbacks hasta cargar (display=swap). --}}
     <link href="{{ $fontsCss }}" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="{{ $fontsCss }}" rel="stylesheet"></noscript>
-    <title>@yield('title', 'Carpir | Banda de Rock Indie')</title>
-    @stack('styles')
-    @foreach($appCssHrefs as $cssHref)
-    <link rel="stylesheet" href="{{ $cssHref }}" media="print" onload="this.media='all'">
-    @endforeach
-    @if(!empty($appCssHrefs))
-    <noscript>
-        @foreach($appCssHrefs as $cssHref)
-        <link rel="stylesheet" href="{{ $cssHref }}">
-        @endforeach
-    </noscript>
-    @endif
     @hasSection('structured_data')
         @yield('structured_data')
     @else
