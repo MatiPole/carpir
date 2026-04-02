@@ -732,6 +732,37 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--ff-sansation); }
   margin-bottom: 2rem;
 }
 .noticia-texto p { margin-bottom: 1rem; }
+.noticia-texto-expandable {
+  margin-bottom: 2rem;
+}
+.noticia-texto-expandable .noticia-texto-inner {
+  margin-bottom: 0;
+}
+.noticia-texto-expandable.is-collapsed .noticia-texto-inner {
+  max-height: 7.2em;
+  overflow: hidden;
+}
+.noticia-ver-mas-btn {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: var(--ff-montserrat);
+  font-weight: 600;
+  font-size: 1rem;
+  color: #a711ec;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.noticia-ver-mas-btn:hover {
+  color: #8b0bc9;
+}
+.noticia-ver-mas-btn:focus-visible {
+  outline: 2px solid #a711ec;
+  outline-offset: 2px;
+}
 .noticia-carousel {
   position: relative;
   border-radius: 15px;

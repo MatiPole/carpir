@@ -106,7 +106,10 @@
         <div class="noticia-preview-container">
             <article class="noticia-preview-content">
                 <h3>{{ $ultima->titulo }}<span class="fecha-badge">{{ $ultima->fecha }}</span></h3>
-                <div class="noticia-texto">{!! $ultima->noticia !!}</div>
+                <div class="noticia-texto-expandable" data-noticia-expandable>
+                    <div class="noticia-texto noticia-texto-inner">{!! $ultima->noticia !!}</div>
+                    <button type="button" class="noticia-ver-mas-btn" aria-expanded="false">Ver más</button>
+                </div>
             </article>
             <div class="noticia-carousel" data-carousel="noticia-preview">
                 <button type="button" class="carousel-button prev" aria-label="Anterior">‹</button>
@@ -133,6 +136,7 @@
         </div>
         <a href="{{ route('noticias.index') }}" class="ver-mas-section-link escuchanos-ver-mas">Más Noticias</a>
         @push('scripts')
+        <script src="{{ asset('assets/noticia-expandable.js') }}?v={{ filemtime(public_path('assets/noticia-expandable.js')) }}"></script>
         <script>
         (function(){
           var c = document.querySelector('.noticia-carousel[data-carousel="noticia-preview"]');

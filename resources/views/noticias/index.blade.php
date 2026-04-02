@@ -45,7 +45,10 @@
                 </div>
                 <div class="noticia-content">
                     <h2>{{ $n->titulo }}<span class="fecha-badge">{{ $n->fecha }}</span></h2>
-                    <div class="noticia-texto">{!! $n->noticia !!}</div>
+                    <div class="noticia-texto-expandable" data-noticia-expandable>
+                        <div class="noticia-texto noticia-texto-inner">{!! $n->noticia !!}</div>
+                        <button type="button" class="noticia-ver-mas-btn" aria-expanded="false">Ver más</button>
+                    </div>
                     <div class="noticia-actions">
                         @if(count($extras) > 0)
                         <button type="button" class="ver-fotos-button" data-img-extras="{{ json_encode($extras) }}" data-alt-extras="{{ json_encode($altExtras) }}">Ver más fotos y videos</button>
@@ -84,6 +87,7 @@
 </div>
 
 @push('scripts')
+<script src="{{ asset('assets/noticia-expandable.js') }}?v={{ filemtime(public_path('assets/noticia-expandable.js')) }}"></script>
 <script>
 (function() {
     var modal = document.getElementById('modal-fotos');
